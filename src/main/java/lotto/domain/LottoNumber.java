@@ -30,10 +30,7 @@ public class LottoNumber {
     }
 
     public static LottoNumber from(int number) {
-        if (CACHE.get(number) == null) {
-            CACHE.put(number, new LottoNumber(number));
-        }
-        return CACHE.get(number);
+        return CACHE.computeIfAbsent(number, LottoNumber::new);
     }
 
     public int getLottoNumber() {
