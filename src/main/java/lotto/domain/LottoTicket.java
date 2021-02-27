@@ -15,10 +15,9 @@ public class LottoTicket {
     }
 
     public static LottoTicket generateTicket(List<Integer> numbers) {
-        Set<LottoNumber> lottoNumbers = numbers.stream()
+        return numbers.stream()
                 .map(LottoNumber::from)
-                .collect(Collectors.toSet());
-        return new LottoTicket(lottoNumbers);
+                .collect(Collectors.collectingAndThen(Collectors.toSet(), LottoTicket::new));
     }
 
     private static void validateNumberCounts(int numberCounts) {
@@ -31,10 +30,9 @@ public class LottoTicket {
         return Collections.unmodifiableSet(lottoNumbers);
     }
 
-    public int getMatchCounts(LottoTicket winningTicket) {
-        return (int) this.lottoNumbers.stream()
-                .filter(winningTicket::contains)
-                .count();
+    public int getMatchCounts(LottoTicket lottoTicket) {
+        this.lottoNumbers.retainAll(lottoTicket.lottoNumbers);
+        return this.lottoNumbers.size();
     }
 
     public boolean contains(LottoNumber lottoNumber) {
