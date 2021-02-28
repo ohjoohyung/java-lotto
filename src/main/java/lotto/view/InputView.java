@@ -1,12 +1,10 @@
 package lotto.view;
 
-import lotto.domain.LottoNumber;
-
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Scanner;
 import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public class InputView {
     private static final Scanner SCANNER = new Scanner(System.in);
@@ -48,12 +46,10 @@ public class InputView {
 
     public static List<List<Integer>> inputManualLottoNumbers(int manualTicketCounts) {
         System.out.println(INPUT_MANUAL_LOTTO_NUMBERS_MESSAGE);
-        List<List<Integer>> numberGroup = new ArrayList<>();
-        for (int i = 0; i < manualTicketCounts; i++) {
-            numberGroup.add(Arrays.stream(SCANNER.nextLine().split(COMMA_DELIMITER, SPLIT_LIMIT_THRESHOLD))
-            .map(Integer::parseInt)
-            .collect(Collectors.toList()));
-        }
-        return numberGroup;
+        return Stream.generate(() -> Arrays.stream(SCANNER.nextLine().split(COMMA_DELIMITER, SPLIT_LIMIT_THRESHOLD))
+        .map(Integer::parseInt)
+        .collect(Collectors.toList()))
+                .limit(manualTicketCounts)
+                .collect(Collectors.toList());
     }
 }
