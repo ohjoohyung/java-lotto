@@ -21,12 +21,12 @@ public class LottoController {
 
     private LottoTickets buyLottoTickets(Money money) {
         int manualTicketCounts = InputView.inputManualTicketCounts();
-        PurchasingCounts purchasingCounts = PurchasingCounts.of(money, manualTicketCounts);
+        PurchasingInfo purchasingInfo = PurchasingInfo.of(money, manualTicketCounts);
         List<List<Integer>> manualLottoNumbers = InputView.inputManualLottoNumbers(manualTicketCounts);
         LottoMachine lottoMachine = new LottoMachine(new ManualLottoNumberGenerator(manualLottoNumbers),
                 new RandomLottoNumberGenerator());
-        LottoTickets lottoTickets = lottoMachine.buyLottoTickets(purchasingCounts);
-        OutputView.printLottoCountMessage(purchasingCounts);
+        LottoTickets lottoTickets = lottoMachine.buyLottoTickets(purchasingInfo);
+        OutputView.printLottoCountMessage(purchasingInfo);
         OutputView.printLottoTicketNumbers(lottoTickets);
         return lottoTickets;
     }

@@ -9,9 +9,9 @@ public class LottoMachine {
         this.randomLottoNumberGenerator = randomLottoNumberGenerator;
     }
 
-    public LottoTickets buyLottoTickets(PurchasingCounts purchasingCounts) {
-        LottoTickets manualLottoTickets = LottoTickets.generateLottoTickets(purchasingCounts.getManualTicketCounts(), manualLottoNumberGenerator);
-        LottoTickets autoLottoTickets = LottoTickets.generateLottoTickets(purchasingCounts.getAutoTicketCounts(), randomLottoNumberGenerator);
+    public LottoTickets buyLottoTickets(PurchasingInfo purchasingInfo) {
+        LottoTickets manualLottoTickets = LottoTickets.generateLottoTickets(purchasingInfo.getManualTicketCounts(), manualLottoNumberGenerator);
+        LottoTickets autoLottoTickets = LottoTickets.generateLottoTickets(purchasingInfo.getAutoTicketCounts(), randomLottoNumberGenerator);
         return manualLottoTickets.addAll(autoLottoTickets);
     }
 }

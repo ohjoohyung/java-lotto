@@ -30,7 +30,7 @@ public class LottoTickets {
 
     public LottoStatistics getStatistics(WinningLottoTicket winningLottoTicket) {
         Map<LottoRank, Long> statistics = lottoTickets.stream()
-                .map(winningLottoTicket::compareNumbers)
+                .map(lottoTicket -> winningLottoTicket.compareNumbers(lottoTicket))
                 .collect(Collectors.groupingBy(lottoRank -> lottoRank, Collectors.counting()));
         return new LottoStatistics(statistics);
     }
