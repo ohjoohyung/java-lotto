@@ -14,7 +14,12 @@ public class LottoTicket {
         this.lottoNumbers = lottoNumbers;
     }
 
-    public static LottoTicket generateTicket(List<Integer> numbers) {
+    public static LottoTicket generateTicket(List<LottoNumber> numbers) {
+        return numbers.stream()
+                .collect(Collectors.collectingAndThen(Collectors.toSet(), LottoTicket::new));
+    }
+
+    public static LottoTicket generateTicketByInteger(List<Integer> numbers) {
         return numbers.stream()
                 .map(LottoNumber::from)
                 .collect(Collectors.collectingAndThen(Collectors.toSet(), LottoTicket::new));

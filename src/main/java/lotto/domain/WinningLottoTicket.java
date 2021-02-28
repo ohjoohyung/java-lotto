@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class WinningLottoTicket {
     private static final String DUPLICATION_NUMBER = "보너스 볼 번호는 당첨 번호와 중복될 수 없습니다.";
@@ -15,7 +16,9 @@ public class WinningLottoTicket {
     }
 
     public static WinningLottoTicket of(List<Integer> winningNumbers, int bonusBallNumber) {
-        LottoTicket lottoTicket = LottoTicket.generateTicket(winningNumbers);
+        LottoTicket lottoTicket = LottoTicket.generateTicket(winningNumbers.stream()
+        .map(LottoNumber::from)
+        .collect(Collectors.toList()));
         LottoNumber bonusLottoNumber = LottoNumber.from(bonusBallNumber);
         return new WinningLottoTicket(lottoTicket, bonusLottoNumber);
     }

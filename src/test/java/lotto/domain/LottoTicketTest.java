@@ -33,7 +33,7 @@ class LottoTicketTest {
     @MethodSource("getInvalidLottoNumbers")
     void wrongLottoNumberCounts(List<Integer> numbers) {
         assertThatCode(() -> {
-            LottoTicket.generateTicket(numbers);
+            LottoTicket.generateTicketByInteger(numbers);
         }).isInstanceOf(IllegalArgumentException.class)
                 .hasMessage("로또 티켓은 중복되지 않은 6자리의 숫자로 구성되어야 합니다.");
     }
@@ -41,7 +41,7 @@ class LottoTicketTest {
     @DisplayName("로또 티켓이 정상적으로 발급될 경우")
     @Test
     void makeLottoTicket() {
-        LottoTicket lottoTicket = LottoTicket.generateTicket(Arrays.asList(1, 2, 3, 4, 5, 6));
+        LottoTicket lottoTicket = LottoTicket.generateTicketByInteger(Arrays.asList(1, 2, 3, 4, 5, 6));
 
         Set<LottoNumber> lottoNumbers = lottoTicket.getLottoNumbers();
 
@@ -53,8 +53,8 @@ class LottoTicketTest {
     @ParameterizedTest
     @MethodSource("getTicketNumbers")
     void compareLottoTickets(List<Integer> numbers, int matchCounts) {
-        LottoTicket lottoTicket = LottoTicket.generateTicket(Arrays.asList(1, 2, 3, 4, 5, 6));
-        LottoTicket winningTicket = LottoTicket.generateTicket(numbers);
+        LottoTicket lottoTicket = LottoTicket.generateTicketByInteger(Arrays.asList(1, 2, 3, 4, 5, 6));
+        LottoTicket winningTicket = LottoTicket.generateTicketByInteger(numbers);
 
         int targetMatchCounts = lottoTicket.getMatchCounts(winningTicket);
 
@@ -65,7 +65,7 @@ class LottoTicketTest {
     @ParameterizedTest
     @CsvSource({"1,true", "2,false"})
     void contains(int ballNumber, boolean target) {
-        LottoTicket lottoTicket = LottoTicket.generateTicket(Arrays.asList(1, 9, 3, 4, 5, 6));
+        LottoTicket lottoTicket = LottoTicket.generateTicketByInteger(Arrays.asList(1, 9, 3, 4, 5, 6));
 
         boolean isContainingBonusNumber = lottoTicket.contains(LottoNumber.from(ballNumber));
 

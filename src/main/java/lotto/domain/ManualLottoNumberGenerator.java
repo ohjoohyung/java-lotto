@@ -1,6 +1,7 @@
 package lotto.domain;
 
 import java.util.List;
+import java.util.stream.Collectors;
 
 public class ManualLottoNumberGenerator implements LottoNumberGenerator {
     private final List<List<Integer>> numberGroup;
@@ -12,7 +13,9 @@ public class ManualLottoNumberGenerator implements LottoNumberGenerator {
     }
 
     @Override
-    public List<Integer> generate() {
-        return numberGroup.get(index++);
+    public List<LottoNumber> generate() {
+        return numberGroup.get(index++).stream()
+                .map(LottoNumber::from)
+                .collect(Collectors.toList());
     }
 }

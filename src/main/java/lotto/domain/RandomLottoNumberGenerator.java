@@ -8,12 +8,13 @@ public class RandomLottoNumberGenerator implements LottoNumberGenerator {
     private static final int MINIMUM_NUMBER = 1;
     private static final int MAXIMUM_NUMBER = 45;
 
-    private static final List<Integer> NUMBERS = IntStream.rangeClosed(MINIMUM_NUMBER, MAXIMUM_NUMBER)
+    private static final List<LottoNumber> NUMBERS = IntStream.rangeClosed(MINIMUM_NUMBER, MAXIMUM_NUMBER)
             .boxed()
+            .map(LottoNumber::from)
             .collect(Collectors.toList());
 
     @Override
-    public List<Integer> generate() {
+    public List<LottoNumber> generate() {
         Collections.shuffle(NUMBERS);
         return NUMBERS.subList(0, 6);
     }

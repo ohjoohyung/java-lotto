@@ -6,6 +6,7 @@ import org.junit.jupiter.api.Test;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.assertj.core.api.Assertions.assertThatThrownBy;
@@ -52,7 +53,9 @@ class LottoTicketsTest {
     @DisplayName("당첨 번호와 구매한 로또 티켓을 비교하여 결과를 반환한다.")
     @Test
     void getLottoResult() {
-        LottoNumberGenerator lottoNumberGenerator = () -> Arrays.asList(1, 2, 3, 4, 5, 6);
+        LottoNumberGenerator lottoNumberGenerator = () -> Arrays.asList(1, 2, 3, 4, 5, 6).stream()
+                .map(LottoNumber::from)
+                .collect(Collectors.toList());
         LottoTickets lottoTickets = LottoTickets.generateLottoTickets(3, lottoNumberGenerator);
         WinningLottoTicket winningLottoTicket = WinningLottoTicket.of(Arrays.asList(1, 2, 3, 4, 5, 7), 6);
 
